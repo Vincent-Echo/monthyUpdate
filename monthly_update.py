@@ -41,4 +41,22 @@ def get_driver_info(driver_tr_tag):
 	get_driver_or_firmware_download_href(driver_download_link, 'drivers')
 
 
+#Firmware name, version , download url info
+def get_firmware_info(fw_tr_tag):
+		fw_ver = ''
+		fw_rea_note = ''
+		fw_desc = ''
+		fw_ver = fw_tr_tag.contents[1].string.encode("utf-8")
+		if (fw_tr_tag.contents[3].string):
+			fw_rea_note = fw_tr_tag.contents[3].string.encode("utf-8")
+		if (fw_tr_tag.contents[5].string)
+			fw_desc = fw_tr_tag.contents[5].string.encode("utf-8")
+			
+		fw_donwload_link = "www.zebra.com" + fw_tr_tag.contents[7].a['href'].encode("utf-8")
+		log_file.write(fw_ver + '\n')
+		log_file.write(fw_rea_note + '\n')
+		log_file.write(fw_desc + '\n')
+		#This function can get driver or firmware download url 
+		get_driver_or_firmware_download_href(fw_donwload_link, 'firmware')
+
 log_file.close()
