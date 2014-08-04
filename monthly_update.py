@@ -21,3 +21,9 @@ for child in printer_list.children:
 				strs = re.split('/', printer_url)
 				printer = re.sub('.html', '', strs[-1])
 				printers[printer] = printer_url
+
+#record driver and firmware version				
+log_file = open('tmp.log', 'w')
+
+
+log_file.close()
