@@ -70,4 +70,27 @@ def get_firmware_info(fw_tr_tag):
 		#This function can get driver or firmware download url 
 		get_driver_or_firmware_download_href(fw_donwload_link, 'firmware')
 
+#Get driver tag and firmware tag from main page of the printer		
+def get_driver_and_firmware_info(printer, url):
+	os.system('wget ' + url + ' -O' + printer + '.html')
+	soup = BeautifulSoup(open(printer + '.html'))
+	driver_part = soup.findAll('div', attrs = {"class": "tab-content filterable",
+												"data-tab-label": "Drivers",
+												"data-tab-id": "drivers"})
+	firmware_part = soup.findAll('div', attrs = {"class": "tab-content filterable",
+												 "data-tab-label": "Firmware & Service Packs",
+												 "data-tab-id": "fimware-servicepacks"})
+	if (hasattr(driver_part[0]).table, 'tbody')):
+		for tr_driver in driver_part[0].table.tbody.children:
+			if (tr_driver != '\n'):
+				get_driver_info(tr_driver)
+				
+	for tr_firmware in firmware_part[0].table.tbody.children:
+		if (tr_firmware != '\n'):
+			get_firmware_info(tr_driver)
+		
+for key in printers:
+	get_driver_or_firmware_info(key, printers[key])
+
+	
 log_file.close()
