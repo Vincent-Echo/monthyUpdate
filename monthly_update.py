@@ -25,6 +25,17 @@ for child in printer_list.children:
 #record driver and firmware version				
 log_file = open('tmp.log', 'w')
 
+#Get download url of the driver or firmware
+def get_driver_or_firmware_download_href(href, type):
+	m = re.search(ur'(-.*)\&c=us\&l=en', href)
+	href = 'http://www.zebra.com/us/en/support-download/eula.' + m.group(1)[0] + '.html'
+	os.system('wget "' + href + '" -O driver_temp.html')
+	soup = BeautifulSoup(open('driver_temp.html'))
+	tag_a_s = soup.findAll('a', sctype = type)
+	down_href = zebra + tag_a_s[0]['href'].encode("utf-8")
+	log_file.write(down_href + '\n')
+
+
 #Driver name, version, download url info
 def get_driver_info(driver_tr_tag):
 	if (driver_tr_tag.contents[1].string):
