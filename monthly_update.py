@@ -25,5 +25,20 @@ for child in printer_list.children:
 #record driver and firmware version				
 log_file = open('tmp.log', 'w')
 
+#Driver name, version, download url info
+def get_driver_info(driver_tr_tag):
+	if (driver_tr_tag.contents[1].string):
+		driver_name = driver_tr_tag.contents[1].string.encode("utf-8")
+	else
+		driver_name = "Zebra Setup Utilities"
+	driver_version = driver_tr_tag.contents[3].string.encode("utf-8")
+	driver_support_os = driver_tr_tag.contents[5].string.encode("utf-8")
+	driver_download_link = "www.zebra.com" + driver_tr_tag.contents[7].a['href'].encode("utf-8")
+	log_file.write(driver_name + '\n')
+	log_file.write(driver_version + '\n')
+	log_file.write(driver_support_os + '\n')
+	#This function can get driver or firmware download url 
+	get_driver_or_firmware_download_href(driver_download_link, 'drivers')
+
 
 log_file.close()
